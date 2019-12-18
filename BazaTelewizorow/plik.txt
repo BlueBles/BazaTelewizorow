@@ -1,0 +1,4 @@
+1`GOGEN`RF9G10VUZD`480`42914`True`88,51`9517,42`Telewizor jest biały
+5`JVC`ABCONKK1MH`1280`11110`False`5,34`6434,4`Telewizor jest srebrny
+7`MANTA`8963Z1Q8KZ`2560`1899`True`95,9`2149,78`Telewizor jest srebrny
+11`SONY`DYBV87WLEN`2560`33405`True`91,97`1656,55`Telewizor jest ekstra
