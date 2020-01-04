@@ -8,6 +8,12 @@ namespace BazaTelewizorow
     public class Losowator
     {
         static Random random = new Random(Guid.NewGuid().GetHashCode()); //losowator o takim seedzie że łohohoho
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
         public static string RandomBrand() // losowanie marki z puli jaka jest w pliku marka.txt
         {
             var randBrand = random.Next(0, 26);
@@ -98,13 +104,13 @@ namespace BazaTelewizorow
         {
             IDelem = id;
             Random random = new Random(Guid.NewGuid().GetHashCode());
-            //kodproduktu = Losowator.RandomString(10);
-            //brand = Losowator.RandomBrand();
-            //rozdzielczosc = Losowator.RandomRozdzielczosc();
-            //sprzedaz = Losowator.RandomSprzedaz();
-            //opis = Losowator.RandomStringOpis();
-            //cal = double.Parse(Losowator.RandomCal());
-            //cena = double.Parse(Losowator.RandomCena());
+            kodproduktu = Losowator.RandomString(10);
+            brand = Losowator.RandomBrand();
+            rozdzielczosc = Losowator.RandomRozdzielczosc();
+            sprzedaz = Losowator.RandomSprzedaz();
+            opis = Losowator.RandomStringOpis();
+            cal = double.Parse(Losowator.RandomCal());
+            cena = double.Parse(Losowator.RandomCena());
             nrSerii = int.Parse(Losowator.RandomSeria(5));
         }
         public DataClass(
@@ -133,7 +139,6 @@ namespace BazaTelewizorow
     public class Sortowanie
     {
         DataClass[] tablica;
-
         public Sortowanie(List<DataClass> tablica)
         {
             this.tablica = tablica.ToArray();
@@ -153,17 +158,14 @@ namespace BazaTelewizorow
             }
 
         }
-
         public void Swap(int first, int second)//zamiana miejscami w tablicy
         {
             var temporary = tablica[first];
             tablica[first] = tablica[second];
             tablica[second] = temporary;
         }
-
         public void sortowanieNrSeriiSelectionSort()//sortowanie przez selekcje
         {
-
             int smallest;
             for (int i = 0; i < tablica.Length - 1; i++)
             {
@@ -172,6 +174,130 @@ namespace BazaTelewizorow
                 for (int index = i + 1; index < tablica.Length; index++)
                 {
                     if (tablica[index].nrSerii < tablica[smallest].nrSerii)
+                    {
+                        smallest = index;
+                    }
+                }
+                Swap(i, smallest);
+            }
+        }
+        public void sortowanieKodProduktuSelectionSort()//sortowanie przez selekcje
+        {
+            int smallest;
+            for (int i = 0; i < tablica.Length - 1; i++)
+            {
+                smallest = i;
+
+                for (int index = i + 1; index < tablica.Length; index++)
+                {
+                    if (tablica[smallest].kodproduktu.CompareTo(tablica[index].kodproduktu) > 0)
+                    {
+                        smallest = index;
+                    }
+                }
+                Swap(i, smallest);
+            }
+        }
+
+        public void sortowanieBrandSelectionSort()//sortowanie przez selekcje
+        {
+            int smallest;
+            for (int i = 0; i < tablica.Length - 1; i++)
+            {
+                smallest = i;
+
+                for (int index = i + 1; index < tablica.Length; index++)
+                {
+                    if (tablica[smallest].brand.CompareTo(tablica[index].brand) > 0)
+                    {
+                        smallest = index;
+                    }
+                }
+                Swap(i, smallest);
+            }
+        }
+        public void sortowanieOpisSelectionSort()//sortowanie przez selekcje
+        {
+            int smallest;
+            for (int i = 0; i < tablica.Length - 1; i++)
+            {
+                smallest = i;
+
+                for (int index = i + 1; index < tablica.Length; index++)
+                {
+                    if (tablica[smallest].opis.CompareTo(tablica[index].opis) > 0)
+                    {
+                        smallest = index;
+                    }
+                }
+                Swap(i, smallest);
+            }
+        }
+        public void sortowanieKodSelectionSort()//sortowanie przez selekcje
+        {
+            int smallest;
+            for (int i = 0; i < tablica.Length - 1; i++)
+            {
+                smallest = i;
+
+                for (int index = i + 1; index < tablica.Length; index++)
+                {
+                    if (tablica[smallest].kodproduktu.CompareTo(tablica[index].kodproduktu) > 0)
+                    {
+                        smallest = index;
+                    }
+                }
+                Swap(i, smallest);
+            }
+        }
+        public void sortowanieRozSelectionSort()//sortowanie przez selekcje
+        {
+            int smallest;
+            for (int i = 0; i < tablica.Length - 1; i++)
+            {
+                smallest = i;
+
+                for (int index = i + 1; index < tablica.Length; index++)
+                {
+                    if (tablica[index].rozdzielczosc < tablica[smallest].rozdzielczosc)
+                    {
+                        smallest = index;
+                    }
+                }
+                Swap(i, smallest);
+
+
+            }
+        }
+        public void sortowanieCalSelectionSort()//sortowanie przez selekcje
+        {
+            int smallest;
+            for (int i = 0; i < tablica.Length - 1; i++)
+            {
+                smallest = i;
+
+                for (int index = i + 1; index < tablica.Length; index++)
+                {
+                    if (tablica[index].cal < tablica[smallest].cal)
+                    {
+                        smallest = index;
+                    }
+                }
+                Swap(i, smallest);
+
+
+            }
+        }
+        public void sortowanieCenaSelectionSort()//sortowanie przez selekcje
+        {
+            int smallest;
+            for (int i = 0; i < tablica.Length - 1; i++)
+            {
+                smallest = i;
+
+                for (int index = i + 1; index < tablica.Length; index++)
+                {
+                    if (tablica[index].cena < tablica[smallest].cena)
                     {
                         smallest = index;
                     }
@@ -192,7 +318,6 @@ namespace BazaTelewizorow
         DataClass[] tablica;
         DataClass wynik = new DataClass(brak);
         List<DataClass> wynikList = new List<DataClass>();
-
         public Wyszukiwanie(List<DataClass> tablica)//wpisanie listy do tablicy
         {
             this.tablica = tablica.ToArray();
@@ -213,18 +338,15 @@ namespace BazaTelewizorow
 
             return wynikList;
         }
-        public DataClass binarne(int szukana) //wyszukiwanie binarne
+        public DataClass binarneInt(int szukana) //wyszukiwanie binarne
         {
-            //int d = 0;
             int l, p;
             l = 0;
             p = tablica.Length - 1;
             int sr;
             while (l <= p)
             {
-                //d++;
                 sr = (l + p) / 2;
-                //System.Console.WriteLine("moje d " + d); //sprawdzam tym fakt, ilości podziałów binarnych
                 if (tablica[sr].nrSerii == szukana)
                 {
                     wynik = tablica[sr];
@@ -239,6 +361,141 @@ namespace BazaTelewizorow
 
 
 
+        }
+        public DataClass binarneRoz(int szukana) //wyszukiwanie binarne
+        {
+            int l, p;
+            l = 0;
+            p = tablica.Length - 1;
+            int sr;
+            while (l <= p)
+            {
+                sr = (l + p) / 2;
+                if (tablica[sr].rozdzielczosc == szukana)
+                {
+                    wynik = tablica[sr];
+                    return wynik;
+                }
+                if (tablica[sr].rozdzielczosc > szukana)
+                    p = sr - 1;
+                else
+                    l = sr + 1;
+            }
+            return wynik;
+
+
+
+        }
+        public DataClass binarneCal(double szukana) //wyszukiwanie binarne
+        {
+            int l, p;
+            l = 0;
+            p = tablica.Length - 1;
+            int sr;
+            while (l <= p)
+            {
+                sr = (l + p) / 2;
+                if (tablica[sr].cal == szukana)
+                {
+                    wynik = tablica[sr];
+                    return wynik;
+                }
+                if (tablica[sr].cal > szukana)
+                    p = sr - 1;
+                else
+                    l = sr + 1;
+            }
+            return wynik;
+
+
+
+        }
+        public DataClass binarneCena(double szukana) //wyszukiwanie binarne
+        {
+            int l, p;
+            l = 0;
+            p = tablica.Length - 1;
+            int sr;
+            while (l <= p)
+            {
+                sr = (l + p) / 2;
+                if (tablica[sr].cena == szukana)
+                {
+                    wynik = tablica[sr];
+                    return wynik;
+                }
+                if (tablica[sr].cena > szukana)
+                    p = sr - 1;
+                else
+                    l = sr + 1;
+            }
+            return wynik;
+
+
+
+        }
+        public DataClass binarneMarkaString(string szukana) //wyszukiwanie binarne
+        {
+            int l, p;
+            l = 0;
+            p = tablica.Length - 1;
+            int sr;
+            while (l <= p)
+            {
+                sr = (l + p) / 2;
+                if (tablica[sr].brand.Equals(szukana))
+                {
+                    wynik = tablica[sr];
+                    return wynik;
+                }
+                if (tablica[sr].brand.CompareTo(szukana) > 0)
+                    p = sr - 1;
+                else
+                    l = sr + 1;
+            }
+            return wynik;
+        }
+        public DataClass binarneOpisString(string szukana) //wyszukiwanie binarne
+        {
+            int l, p;
+            l = 0;
+            p = tablica.Length - 1;
+            int sr;
+            while (l <= p)
+            {
+                sr = (l + p) / 2;
+                if (tablica[sr].opis.Equals(szukana))
+                {
+                    wynik = tablica[sr];
+                    return wynik;
+                }
+                if (tablica[sr].opis.CompareTo(szukana) > 0)
+                    p = sr - 1;
+                else
+                    l = sr + 1;
+            }
+            return wynik;
+        }
+        public DataClass binarneKodString(string szukana) //wyszukiwanie binarne
+        {
+            int l, p;
+            l = 0;
+            p = tablica.Length - 1;
+            int sr;
+            while (l <= p)
+            {
+                sr = (l + p) / 2;
+                if (tablica[sr].kodproduktu.Equals(szukana))
+                {
+                    wynik = tablica[sr];
+                    return wynik;
+                }
+                if (tablica[sr].kodproduktu.CompareTo(szukana) > 0)
+                    p = sr - 1;
+                else
+                    l = sr + 1;
+            }
+            return wynik;
         }
 
     }

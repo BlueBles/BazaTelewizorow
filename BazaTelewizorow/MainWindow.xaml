@@ -10,9 +10,9 @@
         MinHeight="450" MinWidth="750"
         WindowStartupLocation="CenterScreen"
         Title="Telewizory" Height="490" Width="850" >
-    
+
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"/>
             <ColumnDefinition Width="1*"/>
@@ -41,9 +41,13 @@
 
         </DataGrid>
 
-        <Grid Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
-            <TextBox x:Name="coNty" VerticalAlignment="Top" Width="60" Margin="0,10" Height="45" ></TextBox>
-            <Button x:Name="coNtyPrzycisk" Content="Usuń co N" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="coNtyPrzycisk_Click" Height="50" Margin="0,10" /> 
+        <Grid Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ClipToBounds="True" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="hashtable" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ></TextBox>
+            <Button x:Name="HashTableSearch" Grid.Row="1" Content="Tablica Hashowa" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="HashPrzycisk_Click"  />
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -55,15 +59,12 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            
-            <Button x:Name="sortuj" Content="sortuj" HorizontalAlignment="Center"   VerticalAlignment="Stretch" Click="sortuj_Click"/>
-            <TextBlock Text="Szukany NRSERII" Grid.Row="1" />
-            <TextBox x:Name="szukana" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Text="" />
-            <Button Grid.Column="1" x:Name="binarnie" Content="binarnie" HorizontalAlignment="Center" Height="20"  VerticalAlignment="Center" Click="binarne_Click"/>
-            <Button Grid.Column="1" Grid.Row="1" x:Name="liniowe" Content="liniowe" HorizontalAlignment="Center" Height="20"  VerticalAlignment="Center" Click="liniowe_Click"/>
+          <!-- najczesciej wystepujaca-->  <Button Visibility="Hidden" x:Name="najczesciej" Grid.Column="1" Grid.Row="1" Content="najczesciej" Click="najczesciej_Click"/>
+            <Button Grid.Row="1" x:Name="sortuj"  Content="int sortowanie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Click="sortuj_Click"/>
+            <Button x:Name="sortujString"  Content="string sortowanie" HorizontalAlignment="Stretch" Width="auto" VerticalAlignment="Stretch" Click="sortujString_Click"/>
         </Grid>
 
-            <Grid x:Name="losujusun" Grid.Column="1" HorizontalAlignment="Stretch" Height="100" ClipToBounds="True" VerticalAlignment="Stretch">
+        <Grid x:Name="losujusun" Grid.Column="1" HorizontalAlignment="Stretch" Height="100" ClipToBounds="True" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
@@ -72,7 +73,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-                
+
             <TextBox Grid.Column="0" x:Name="Text" TextAlignment="Center"   
                      FontSize="18" HorizontalContentAlignment="Center"  
                      Width="auto"  VerticalAlignment="Stretch" Text=""  />
@@ -90,13 +91,18 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            <TextBlock Text="Obsługa pliku" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center" />
+            <Border Grid.ColumnSpan="2" Grid.Row="0" BorderThickness="2" BorderBrush="BlanchedAlmond" />
+            <Border Grid.ColumnSpan="2" Grid.Row="1" BorderThickness="2" BorderBrush="Khaki" />
             <Button x:Name="wczytaj" Content="Wczytaj" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Click="wczytaj_Click" ></Button>
             <Button x:Name="zapisz" Content="zapisz" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Click="zapisz_Click" ></Button>
-            <Button x:Name="kasujwszystko" Content="Usun wszystko" Width="100" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="kasujwszystko_Click"/>
+            <Button x:Name="kasujwszystko" Content="Usun wszystko" Width="100" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="kasujwszystko_Click"/>
+            <Button   Grid.Row="1" Grid.ColumnSpan="2" Content="Cofnij" x:Name="wrocSzukanie" HorizontalAlignment="Stretch" Click="wrocSzukanie_Click" />
+            
 
         </Grid>
         <Grid x:Name="dodawanieDoDataGrid" Grid.Row="3" Grid.Column="1"  >
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -110,23 +116,23 @@
             </Grid.ColumnDefinitions>
             <Border Grid.ColumnSpan="2" Grid.RowSpan="5" BorderThickness="1" BorderBrush="Aqua"/>
             <TextBlock Grid.Row="0" Grid.Column="0" TextAlignment="Center" Text="Marka" VerticalAlignment="Top"  HorizontalAlignment="Stretch"  />
-            <TextBox Grid.Row="0" Grid.Column="0" x:Name="MarkaDodawanie" Text=""  VerticalAlignment="Bottom"  HorizontalAlignment="Stretch"/>
+            <TextBox Grid.Row="0" Grid.Column="0" x:Name="MarkaDodawanie" Text=""  VerticalAlignment="Center"  HorizontalAlignment="Stretch"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="KodProduktu"   HorizontalAlignment="Stretch"/>
-            <TextBox  Grid.Row="1" Grid.Column="0" Text="0" x:Name="KodDodawanie"   HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+            <TextBox  Grid.Row="1" Grid.Column="0" Text="0" x:Name="KodDodawanie"   HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="Cali" VerticalAlignment="Top"  TextAlignment="Center" />
-            <TextBox Grid.Row="1" Grid.Column="1" Text="0" x:Name="CalDodawanie"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="0" x:Name="CalDodawanie"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
             <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="1" Text="Cena"  HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="0" x:Name="CenaDodawanie"   HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="0" x:Name="CenaDodawanie"   HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Rozdzielczosc"     HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-            <TextBox Grid.Row="2" Grid.Column="0" Text="0" x:Name="RozDodawanie"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="Opis"  HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-            <TextBox  Grid.Row="2" Grid.Column="1" x:Name="OpisDodawanie"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-            <CheckBox   Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" x:Name="sprzedaz" />
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Na sprzedaż" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="Nrserii"  HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Text="0" x:Name="NrSeriiDodawanie"   HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+            <TextBox Grid.Row="2" Grid.Column="0" Text="0" x:Name="RozDodawanie"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="Opis" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <TextBox  Grid.Row="2" Grid.Column="1" x:Name="OpisDodawanie"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+            <CheckBox   Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="sprzedaz" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Na sprzedaż" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="Nrserii" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="0" x:Name="NrSeriiDodawanie"   HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
             <Button Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" x:Name="dodawaniePrzycisk" Content="Dodaj" Click="dodawaniePrzycisk_Click" />
-         
+
         </Grid>
         <Grid x:Name="SzukanieDoDataGrid" Grid.Row="3" Grid.Column="2"  >
 
@@ -141,25 +147,25 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.ColumnSpan="2" Grid.RowSpan="5" BorderThickness="1" BorderBrush="Aqua"/>
+            <Border Grid.ColumnSpan="2" Grid.RowSpan="5" BorderThickness="1" BorderBrush="Aqua">
+                
+            </Border>
             <TextBlock Grid.Row="0" Grid.Column="0" TextAlignment="Center" Text="Marka" VerticalAlignment="Top"  HorizontalAlignment="Stretch"  />
-            <TextBox Grid.Row="0" Grid.Column="0" x:Name="MarkaSzukanie" Text=""  VerticalAlignment="Bottom"  HorizontalAlignment="Stretch"/>
+            <TextBox Grid.Row="0" Grid.Column="0" x:Name="MarkaSzukanie" Text=""  VerticalAlignment="Center"  HorizontalAlignment="Stretch"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="KodProduktu"   HorizontalAlignment="Stretch"/>
-            <TextBox  Grid.Row="1" Grid.Column="0" Text="0" x:Name="KodSzukanie"   HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+            <TextBox  Grid.Row="1" Grid.Column="0" Text="0" x:Name="KodSzukanie"   HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="Cali" VerticalAlignment="Top"  TextAlignment="Center" />
-            <TextBox Grid.Row="1" Grid.Column="1" Text="0" x:Name="CalSzukanie"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="0" x:Name="CalSzukanie"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
             <TextBlock TextAlignment="Center" Grid.Row="0" Grid.Column="1" Text="Cena"  HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="0" x:Name="CenaSzukanie"   HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="0" x:Name="CenaSzukanie"   HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Rozdzielczosc"  HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-            <TextBox Grid.Row="2" Grid.Column="0" Text="0" x:Name="RozSzukanie"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="Opis"  HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-            <TextBox  Grid.Row="2" Grid.Column="1" x:Name="OpisSzukanie"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-            <Button   Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Content="X" Width="20" x:Name="wrocSzukanie" Click="wrocSzukanie_Click" />
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Wróć" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="Nrserii"  HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Text="0" x:Name="NrSeriiSzukanie"   HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-            <Button Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" x:Name="SzukaniePrzycisk" Content="Szukaj" Click="SzukaniePrzycisk_Click" />
-
+            <TextBox Grid.Row="2" Grid.Column="0" Text="0" x:Name="RozSzukanie"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="Opis"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <TextBox  Grid.Row="2" Grid.Column="1" x:Name="OpisSzukanie"  HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="Nrserii" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="0" x:Name="NrSeriiSzukanie"   HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+            <Button Grid.Row="4" Grid.ColumnSpan="1" Grid.Column="0" x:Name="SzukaniePrzycisk" Content="Binarnie" Click="SzukaniePrzycisk_Click" />
+            <Button Grid.Row="4" Grid.ColumnSpan="1" Grid.Column="1" x:Name="SzukanieLiniowePrzycisk" Content="Liniowo" Click="SzukanieLiniowePrzycisk_Click" />
 
 
         </Grid>
