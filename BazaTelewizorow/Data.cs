@@ -135,6 +135,11 @@ namespace BazaTelewizorow
             this.opis = opis1;
         }
 
+        public DataClass()
+        {
+
+        }
+
     }
     public class Sortowanie
     {
@@ -499,4 +504,7 @@ namespace BazaTelewizorow
         }
 
     }
+
+   
+
 }

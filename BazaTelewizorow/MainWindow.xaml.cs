@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-
 namespace BazaTelewizorow
 {
 
@@ -321,6 +320,7 @@ namespace BazaTelewizorow
                 dataClass = sortowanie.zwrot().ToList();
                 Wyszukiwanie wyszukiwanie = new Wyszukiwanie(dataClass);
                 dataClassWynik.Add(wyszukiwanie.binarneOpisString(opis1));
+
             }
             timer.Stop();
             MessageBox.Show("Czas szukania binarnego to mili -> " + timer.ElapsedMilliseconds + "\nIlość ticków -> " + timer.ElapsedTicks
@@ -343,13 +343,7 @@ namespace BazaTelewizorow
                 return;
 
             var timer = System.Diagnostics.Stopwatch.StartNew();
-
-            Sortowanie sortowanie = new Sortowanie(dataClass);
-
-            sortowanie.sortowanieNrSeriiSelectionSort();
-
-            dataClass = sortowanie.zwrot().ToList();
-
+            dataClass = dataClass.OrderBy(o => o.nrSerii).ToList();
             timer.Stop();
 
             MessageBox.Show("czas milisekundach = " + timer.ElapsedMilliseconds + "\nIlość ticków -> " + timer.ElapsedTicks
@@ -367,11 +361,7 @@ namespace BazaTelewizorow
 
             var timer = System.Diagnostics.Stopwatch.StartNew();
 
-            Sortowanie sortowanie = new Sortowanie(dataClass);
-
-            sortowanie.sortowanieBrandSelectionSort();
-
-            dataClass = sortowanie.zwrot().ToList();
+            dataClass = dataClass.OrderBy(o => o.kodproduktu).ToList();
 
             timer.Stop();
 
@@ -390,12 +380,13 @@ namespace BazaTelewizorow
             int i = 0; //unikalny klucz taki sam jak ID
             foreach (var t in dataClass) //dodanie dataclass do tablicyhashowej
             {
-                tablicahashowa.Add(dataClass[i].IDelem, dataClass[i].brand);
+                tablicahashowa.Add(dataClass[i].IDelem, dataClass[i].kodproduktu);
                 i++;
             }
             var timer = System.Diagnostics.Stopwatch.StartNew(); //licznik czasu
             if (tablicahashowa.ContainsValue(hashtable.Text) == true) //sprawdzanie czy zawiera
             {
+
                 foreach (DictionaryEntry t in tablicahashowa)
                 {
                     if ((string)t.Value == hashtable.Text)
@@ -419,7 +410,6 @@ namespace BazaTelewizorow
             {
                 string najwiecejMarka = "brak";
                 int najwiecej = 0;
-
                 string marka;
                 for (int i = 1; i < 26; i++)
                 {
@@ -445,7 +435,6 @@ namespace BazaTelewizorow
             }
 
         }
-
         private void SzukanieLiniowePrzycisk_Click(object sender, RoutedEventArgs e)
         {
 
@@ -503,6 +492,7 @@ namespace BazaTelewizorow
                     if (t.nrSerii == nrserii)
                     {
                         dataClassWynik.Add(t);
+                        break;
                     }
                 }
             }
@@ -544,6 +534,241 @@ namespace BazaTelewizorow
             Tabela.ItemsSource = dataClassWynik;
             Tabela.DataContext = dataClassWynik;
         }
+        private void LancuchPrzycisk_Click(object sender, RoutedEventArgs e)
+        {
+            int hash_f(string s)
+            {
+                int uh, ip;
+                uh = 0;
+                for (ip = 0; ip < s.Length; ip++)
+                    uh = 2 * uh + 1 - (s[ip] & 1);
+                return uh % 10;
+            }
+            var timer = System.Diagnostics.Stopwatch.StartNew(); //licznik czasu
+            List<DataClass> brandSzukanie = new List<DataClass>();
+            int i, j, h, c, p = -1;
+            var temp = new DataClass();
 
+            for (i = 0; i < dataClass.Count(); i++)
+            {
+                brandSzukanie.Add(temp);
+
+            }
+            for (i = 0; i < dataClass.Count(); i++)
+            {
+                h = hash_f(dataClass[i].brand);
+                j = h;
+                while (true)
+                {
+                    if (brandSzukanie[j].brand == null)
+                    {
+                        brandSzukanie[j] = dataClass[i];
+                        break;
+                    }
+                    if (brandSzukanie[j].brand == dataClass[i].brand)
+                        break;
+                    j = (j + 1) % dataClass.Count();
+                    if (j == h) break;
+                }
+            }
+            List<DataClass> tem = new List<DataClass>();
+            for (i = 0; i < dataClass.Count(); i++)
+            {
+                h = hash_f(lancuchowa.Text);
+                c = 0;
+                j = h;
+                p = -1;
+                while (true)
+                {
+                    if (brandSzukanie[j].brand == null) break;
+                    if (brandSzukanie[j].brand == lancuchowa.Text)
+                    {
+                        p = j;
+
+                        break;
+                    };
+                    j = (j + 1) % dataClass.Count();
+                    if (j == h) break;
+                    c++;
+                }
+
+
+            }
+            tem.Add(brandSzukanie[p]);
+            timer.Stop();
+            MessageBox.Show("Czas szukania binarnego to mili -> " + timer.ElapsedMilliseconds + "\nIlość ticków -> " + timer.ElapsedTicks
+                + "\nCzas w nanosekundach -> " + timer.ElapsedTicks * 1000000000 / System.Diagnostics.Stopwatch.Frequency
+                ); //czas wykonywania -> komunikat
+
+            Tabela.ItemsSource = null;
+            Tabela.ItemsSource = tem;
+            Tabela.DataContext = tem;
+
+        } // koniec przycisku
+        private void LancuchIntPrzycisk_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int a = int.Parse(lancuchowa.Text);
+
+                if (a < 0)
+                {
+                    MessageBox.Show("Nie ujemne");
+                    return;
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("Nie litery i nie puste");
+                return;
+            }
+
+
+
+            int hash_f(int s)
+            {
+                int uh, ip;
+                uh = 0;
+                for (ip = 0; ip < s.ToString().Length; ip++)
+                    uh = 2 * uh + 1 - (s.ToString()[ip] & 1);
+                return uh % 10;
+            }
+            var timer = System.Diagnostics.Stopwatch.StartNew(); //licznik czasu
+            List<DataClass> nrSeriiSzukanie = new List<DataClass>();
+            int i, j, h, c, p = -1;
+            var temp = new DataClass();
+
+            for (i = 0; i < dataClass.Count(); i++)
+            {
+                nrSeriiSzukanie.Add(temp);
+            }
+            for (i = 0; i < dataClass.Count(); i++)
+            {
+                h = hash_f(dataClass[i].nrSerii);
+                j = h;
+                while (true)
+                {
+                    if (nrSeriiSzukanie[j].nrSerii == 0)
+                    {
+                        nrSeriiSzukanie[j] = dataClass[i];
+                        break;
+                    }
+                    if (nrSeriiSzukanie[j].nrSerii == dataClass[i].nrSerii)
+                        break;
+                    j = (j + 1) % dataClass.Count();
+                    if (j == h) break;
+                }
+            }
+            List<DataClass> tem = new List<DataClass>();
+            for (i = 0; i < dataClass.Count(); i++)
+            {
+                h = hash_f(int.Parse(intPoleLancuch.Text));
+                c = 0;
+                j = h;
+                p = -1;
+                while (true)
+                {
+                    if (nrSeriiSzukanie[j].nrSerii == 0) break;
+                    if (nrSeriiSzukanie[j].nrSerii == int.Parse(intPoleLancuch.Text))
+                    {
+                        p = j;
+
+                        break;
+                    };
+                    j = (j + 1) % dataClass.Count();
+                    if (j == h) break;
+                    c++;
+                }
+
+            }
+            tem.Add(nrSeriiSzukanie[p]);
+            timer.Stop();
+            MessageBox.Show("Czas szukania binarnego to mili -> " + timer.ElapsedMilliseconds + "\nIlość ticków -> " + timer.ElapsedTicks
+                + "\nCzas w nanosekundach -> " + timer.ElapsedTicks * 1000000000 / System.Diagnostics.Stopwatch.Frequency
+                ); //czas wykonywania -> komunikat
+
+            Tabela.ItemsSource = null;
+            Tabela.ItemsSource = tem;
+            Tabela.DataContext = tem;
+
+        }
+        private void inwersyjnaPrzycisk_Click(object sender, RoutedEventArgs e)
+        {
+            var brands = dataClass.ToLookup(data => data.brand);
+            List<List<DataClass>> wynik = new List<List<DataClass>>();
+            List<DataClass> kluczowe = new List<DataClass>();
+            List<DataClass> wyswietl = new List<DataClass>();
+            foreach (var p in brands)
+            {
+                foreach (var a in dataClass)
+                {
+                    if (p.Key.Equals(a.brand))
+                    {
+                        kluczowe.Add(a);
+                    }
+                }
+                wynik.Add(kluczowe);
+            }
+            var timer = System.Diagnostics.Stopwatch.StartNew(); //licznik czasu
+            for (int p = 0; p < wynik[0].Count(); p++) //to dodaje do wyniku/tj.wyswietlania/tylko jeden/inaczej wszystkie są w wynik
+            {
+                if (wynik[0][p].brand == lancuchowa.Text)
+                {
+                    wyswietl.Add(wynik[0][p]);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            timer.Stop();
+            MessageBox.Show("Czas szukania binarnego to mili -> " + timer.ElapsedMilliseconds + "\nIlość ticków -> " + timer.ElapsedTicks
+                + "\nCzas w nanosekundach -> " + timer.ElapsedTicks * 1000000000 / System.Diagnostics.Stopwatch.Frequency
+                ); //czas wykonywania -> komunikat
+
+            Tabela.ItemsSource = null;
+            Tabela.ItemsSource = wyswietl;
+        }
+        private void inwersyjnaIntPrzycisk_Click(object sender, RoutedEventArgs e)
+        {
+            var idelem = dataClass.ToLookup(data => data.rozdzielczosc);
+            List<List<DataClass>> wynik = new List<List<DataClass>>();
+            List<DataClass> kluczowe = new List<DataClass>();
+            List<DataClass> wyswietl = new List<DataClass>();
+            foreach (var p in idelem)
+            {
+                foreach (var a in dataClass)
+                {
+                    if (p.Key.Equals(a.rozdzielczosc))
+                    {
+                        kluczowe.Add(a);
+                    }
+                }
+                wynik.Add(kluczowe);
+            }
+            var timer = System.Diagnostics.Stopwatch.StartNew(); //licznik czasu
+            for (int p = 0; p < wynik[0].Count(); p++) //to dodaje do wyniku/tj.wyswietlania/tylko jeden/inaczej wszystkie są w wynik
+            {
+                if (wynik[0][p].rozdzielczosc == int.Parse(intPoleLancuch.Text))
+                {
+                    wyswietl.Add(wynik[0][p]);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            timer.Stop();
+            MessageBox.Show("Czas szukania binarnego to mili -> " + timer.ElapsedMilliseconds + "\nIlość ticków -> " + timer.ElapsedTicks
+                + "\nCzas w nanosekundach -> " + timer.ElapsedTicks * 1000000000 / System.Diagnostics.Stopwatch.Frequency
+                ); //czas wykonywania -> komunikat
+
+            Tabela.ItemsSource = null;
+            Tabela.ItemsSource = wyswietl;
+        }
     }
 }
+
+
+

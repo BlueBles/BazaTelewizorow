@@ -20,8 +20,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition  Height="1.5*" />
-            <RowDefinition  Height="1.5*" />
-            <RowDefinition  Height="3*" />
+            <RowDefinition  Height="1.9*" />
+            <RowDefinition  Height="2.7*" />
         </Grid.RowDefinitions>
 
         <DataGrid Grid.Column="0" Grid.RowSpan="3" x:Name="Tabela"  HorizontalAlignment="Left" AutoGenerateColumns="False" CanUserResizeColumns="True" 
@@ -41,13 +41,21 @@
 
         </DataGrid>
 
-        <Grid Grid.Row="0" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ClipToBounds="True" >
+        <Grid Grid.Row="0" Grid.RowSpan="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ClipToBounds="True" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <TextBox x:Name="hashtable" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ></TextBox>
-            <Button x:Name="HashTableSearch" Grid.Row="1" Content="Tablica Hashowa" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="HashPrzycisk_Click"  />
+            <TextBox x:Name="hashtable" TextAlignment="Center" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Visibility="Hidden"></TextBox>
+            <Button x:Name="HashTableSearch" Grid.Row="1" Content="Tablica Hashowa" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" Click="HashPrzycisk_Click"  />
+            <Button x:Name="lancuch" Grid.Column="1" Grid.Row="1" Content="lancuchowa marka" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="LancuchPrzycisk_Click"  />
+            <Button x:Name="lancuchInt" Grid.Column="1" Grid.Row="1" Content="lancuchowa int nrserii" HorizontalAlignment="Stretch" VerticalAlignment="Center" Click="LancuchIntPrzycisk_Click"  />
+            <Button x:Name="odwroconaString" Grid.Column="1" Grid.Row="1" Content="inwersyjna string marka" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="inwersyjnaPrzycisk_Click"  />
+
+            <TextBox x:Name="lancuchowa" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Stretch" ></TextBox>
+            <Label Content="Liczby↓ String↑" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+            <TextBox x:Name="intPoleLancuch" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,0" HorizontalAlignment="Stretch" ></TextBox>
+            
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -61,7 +69,9 @@
             </Grid.RowDefinitions>
           <!-- najczesciej wystepujaca-->  <Button Visibility="Hidden" x:Name="najczesciej" Grid.Column="1" Grid.Row="1" Content="najczesciej" Click="najczesciej_Click"/>
             <Button Grid.Row="1" x:Name="sortuj"  Content="int sortowanie" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Click="sortuj_Click"/>
-            <Button x:Name="sortujString"  Content="string sortowanie" HorizontalAlignment="Stretch" Width="auto" VerticalAlignment="Stretch" Click="sortujString_Click"/>
+            <Button Grid.Row="1" Grid.Column="1" x:Name="sortujString"  Content="string sortowanie" HorizontalAlignment="Stretch" Width="auto" VerticalAlignment="Stretch" Click="sortujString_Click"/>
+            <Button x:Name="inwersyjnaInt" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="inwersyjna int rozdzielczosc" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="inwersyjnaIntPrzycisk_Click"  />
+
         </Grid>
 
         <Grid x:Name="losujusun" Grid.Column="1" HorizontalAlignment="Stretch" Height="100" ClipToBounds="True" VerticalAlignment="Stretch">
